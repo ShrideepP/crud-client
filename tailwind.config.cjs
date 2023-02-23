@@ -15,6 +15,8 @@ module.exports = {
         'compliment': '#e2e8f0',
       }, fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],
+      }, fontSize: {
+        'base': ['0.9rem', '1.5rem'],
       },
     },
   },

@@ -1,50 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdTitle, MdSend } from 'react-icons/md';
 import { BiDetail } from 'react-icons/bi';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const CreateNote = () => {
+const EditNote = () => {
 
-    const [noteData, setNoteData] = useState({ title: '', details: '' });
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [note, setNote] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const getNote = async () => {
+        await axios.get(`http://localhost:3000/note/${id}`)
+            .then(response => setNote(response.data))
+            .catch(error => console.log(error));
+    };
+
+    useEffect(() => {
+        getNote();
+    }, []);
 
     const handleSubmit = async e => {
 
         e.preventDefault();
         setLoading(true);
 
-        await axios.post("http://localhost:3000/add", JSON.stringify(noteData), {
+        await axios.put(`http://localhost:3000/note/${id}`, JSON.stringify(note), {
             headers: {
                 'Content-Type': 'application/json',
-            },  
+            },
         })
             .then(response => {
                 setTimeout(() => {
-                    setLoading(false);
-                    setNoteData({ title: '', details: '' });
-                    toast.success("Your note has been submitted successfully!!!"); 
+                    setLoading(false); 
+                    navigate("/");
                 }, 1000);
             })
             .catch(error => {
                 setTimeout(() => {
                     setLoading(false);
-                    setNoteData({ title: '', details: '' });
                     toast.error("Oops! Something went wrong."); 
                 }, 1000);
                 console.log(error);
             });
-            
-    };
 
-    const handleTitle = e => {
-        setNoteData({ ...noteData, title: e.target.value });
-    };
-
-    const handleDetails = e => {
-        setNoteData({ ...noteData, details: e.target.value });
     };
 
     return (
@@ -55,18 +58,18 @@ const CreateNote = () => {
                 theme="dark" 
             />
             <div className='space-y-2 mb-6'>
-                <h2 className='text-2xl text-dominant font-extrabold tracking-wider uppercase'>Create a Note</h2>
+                <h2 className='text-2xl text-dominant font-extrabold tracking-wider uppercase'>Edit Note</h2>
                 <hr className='w-28 h-[2px] border-none bg-accent-dark rounded' />
             </div>
             <form autoComplete='off' onSubmit={ handleSubmit } className='space-y-4'>
                 <div className='w-full h-fit flex items-center overflow-hidden border border-r-0 border-slate-800 rounded-md'>
-                    <input onChange={ handleTitle } value={ noteData.title } required type="text" name="title" placeholder='Note Title' className='w-full px-4 py-3 text-sm text-dominant font-semibold tracking-wider placeholder:text-compliment placeholder:font-bold placeholder:uppercase bg-transparent outline-none' />
+                    <input onChange={e => setNote({...note, title: e.target.value })} value={ note && note.title } required type="text" name="title" placeholder='Note Title' className='w-full px-4 py-3 text-sm text-dominant font-semibold tracking-wider placeholder:text-compliment placeholder:font-bold placeholder:uppercase bg-transparent outline-none' />
                     <div className='w-12 h-12 grid place-items-center bg-accent-dark hover:bg-accent'>
                         <MdTitle className='text-dominant text-2xl' />
                     </div>
                 </div>
                 <div className='w-full h-fit flex items-center overflow-hidden border border-r-0 border-slate-800 rounded-md'>
-                    <input onChange={ handleDetails } value={ noteData.details } required type="text" name="details" placeholder='Note Details' className='w-full px-4 py-3 text-sm text-dominant font-semibold tracking-wider placeholder:text-compliment placeholder:font-bold placeholder:uppercase bg-transparent outline-none' />
+                    <input onChange={ e => setNote({...note, details: e.target.value }) } value={ note && note.details } required type="text" name="details" placeholder='Note Details' className='w-full px-4 py-3 text-sm text-dominant font-semibold tracking-wider placeholder:text-compliment placeholder:font-bold placeholder:uppercase bg-transparent outline-none' />
                     <div className='w-12 h-12 grid place-items-center bg-accent-dark hover:bg-accent'>
                         <BiDetail className='text-dominant text-2xl' />
                     </div>
@@ -92,4 +95,4 @@ const CreateNote = () => {
 
 };
 
-export default CreateNote;
+export default EditNote;

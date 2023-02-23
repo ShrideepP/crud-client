@@ -3,3 +3,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    
+    .my-masonry-grid {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        margin-left: -20px;
+        width: auto;
+    }
+    
+    .my-masonry-grid_column {
+        padding-left: 20px;
+        background-clip: padding-box;
+    }
+    
+    .my-masonry-grid_column > div {
+        margin-bottom: 20px;
+    }
+
+    ::-webkit-scrollbar {
+        display: none;
+    };
+
+}

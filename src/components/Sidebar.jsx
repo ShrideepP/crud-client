@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdNotes, MdAddCircleOutline } from 'react-icons/md';
-import { HiOutlineTrash } from 'react-icons/hi';
  
 const Sidebar = () => {
 
@@ -26,10 +25,6 @@ const Sidebar = () => {
                 <NavLink style={activeStyle} className="w-full px-4 py-3 flex items-center gap-x-6 rounded-md" to='/create'>
                     <MdAddCircleOutline className='text-accent text-xl' />
                     <span className='text-xs text-dominant font-bold tracking-wider uppercase'>Create New</span>
-                </NavLink>
-                <NavLink style={activeStyle} className="w-full px-4 py-3 flex items-center gap-x-6 rounded-md" to='/trash'>
-                    <HiOutlineTrash className='text-accent text-xl' />
-                    <span className='text-xs text-dominant font-bold tracking-wider uppercase'>Trash</span>
                 </NavLink>
             </div>
         </aside>

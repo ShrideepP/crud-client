@@ -7,7 +7,7 @@ const NoteCard = ({ id, title, details, createdAt }) => {
 
     const deleteNote = async () => {
         try {
-            await axios.delete(`${process.env.BACKEND_URL}note/${id}`)
+            await axios.delete(`https://m-fqmf.onrender.com/note/${id}`)
         } catch (error) {
             console.log(error);
         };

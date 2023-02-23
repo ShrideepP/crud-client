@@ -16,7 +16,7 @@ const CreateNote = () => {
         e.preventDefault();
         setLoading(true);
 
-        await axios.post("http://localhost:3000/add", JSON.stringify(noteData), {
+        await axios.post("https://m-fqmf.onrender.com/add", JSON.stringify(noteData), {
             headers: {
                 'Content-Type': 'application/json',
             },  

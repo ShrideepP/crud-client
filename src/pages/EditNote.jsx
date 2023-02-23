@@ -15,7 +15,7 @@ const EditNote = () => {
     const [loading, setLoading] = useState(false);
 
     const getNote = async () => {
-        await axios.get(`http://localhost:3000/note/${id}`)
+        await axios.get(`https://m-fqmf.onrender.com/note/${id}`)
             .then(response => setNote(response.data))
             .catch(error => console.log(error));
     };
@@ -29,7 +29,7 @@ const EditNote = () => {
         e.preventDefault();
         setLoading(true);
 
-        await axios.put(`http://localhost:3000/note/${id}`, JSON.stringify(note), {
+        await axios.put(`https://m-fqmf.onrender.com/note/${id}`, JSON.stringify(note), {
             headers: {
                 'Content-Type': 'application/json',
             },

@@ -18,7 +18,7 @@ const Notes = () => {
     };
 
     const getPosts = async () => {
-        await axios.get("http://localhost:3000/all")
+        await axios.get("https://m-fqmf.onrender.com/all")
             .then(response => {
                 setnotes(response.data);
             })
